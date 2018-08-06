@@ -1,0 +1,25 @@
+<div class="hunts-dashboard">
+  <div class="hunts-buttons"><%= link_to "Reset", hunt_path, class: "button-small" %></div>
+  <div class="hunts-header">
+    <div class="hunt-title">Title</div>
+    <div class="hunt-date">Date</div>
+    <div class="hunt-time">Start at</div>
+    <div class="hunt-duration">Duration</div>
+    <div class="hunt-slot">Hunters enlisted</div>
+    <div class="hunt-leader">Leader</div>
+    <div class="hunt-platform">Platform</div>
+  </div>
+  <% @hunts.each do | hunt | %>
+    <%= link_to show_hunt_path(:hunt => { :hunt_id => hunt.id }), remote: true do %>
+      <div class="hunt-display trigger-modal">
+        <div class="hunt-title"><%= hunt.title %></div>
+        <div class="hunt-date"><%= hunt.datetime.strftime("%a. %d/%m") %></div>
+        <div class="hunt-time"><%= hunt.datetime.strftime("%Hh%M") %></div>
+        <div class="hunt-duration"><%= hunt.duration %>h</div>
+        <div class="hunt-slot"><%= hunt.hunters.size + 1 %>/<%= hunt.max_hunter %></div>
+        <div class="hunt-leader"><%= hunt.leader.username %></div>
+        <div class="hunt-platform"><%= hunt.platform %></div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

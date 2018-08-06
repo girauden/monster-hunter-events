@@ -1,0 +1,48 @@
+<div id="form-container-hunt-finder">
+  <div class="form-padding-side">
+    <%= form_for :hunt, as: :get, url: find_hunts_path(@get), method: :get do |f| %>
+      <div>
+        <%= f.label :platform do %>
+          <%= f.select :platform, ['pc','xbox', 'ps4'] %>
+          <p>Select your game platform</p>
+        <% end %>
+      </div>
+      <div id="bootstrap-datetime-finder">
+        <div class="container">
+          <div class="form-row">
+            <div class="col-xs-4">
+              <div class="form-group">
+                <div class="input-group date" id="datetimepickerfinder" data-target-input="nearest">
+                  <%= f.text_field :datetime, class: "form-control input-sm", data: {target:"#datetimepickerfinder"}, placeholder: "Select date" %>
+                  <div class="input-group-append" data-target="#datetimepickerfinder" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="form-hunt-title-finder"><%= f.text_field :title, placeholder: "Words contained in the title" %></div>
+      <div id="form-hunt-chat-finder">
+        <%= f.label :voice_chat do %>
+          <%= f.check_box :voice_chat, id: "hunt-voice-chat-finder"%>
+          <p>With voice chat</p>
+        <% end %>
+        <div class="show-hide-finder-label">
+          <%= f.label :lang do %>
+            <p>Language</p>
+            <%= f.select :lang, ['', 'fra', 'eng', 'spa', 'deu', 'ita', 'pol', 'rus', 'jpn', 'zho', 'kor', 'por', 'ara'] %>
+          <% end %>
+          <%= f.label :mic do %>
+            <%= f.check_box :mic%>
+            <p>Microphone compulsory</p>
+          <% end %>
+        </div>
+      </div>
+      <div>
+        <%= f.button "Find Hunts", class: "button" %>
+      </div>
+    <% end %>
+  </div>
+</div>

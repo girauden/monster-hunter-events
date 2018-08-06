@@ -1,0 +1,34 @@
+<div class="hunts-dashboard-min">
+  <h2>Hunts Created</h2>
+  <p>don't forget to add your session id !</p>
+  <div class="hunts-header">
+    <div class="hunt-sid-min">Sid</div>
+    <div class="hunt-info-min">
+      <div class="hunt-date-min">Date</div>
+      <div class="hunt-time-min">Start at</div>
+      <div class="hunt-title-min">Title</div>
+    </div>
+  </div>
+  <% @hunts_as_leader_available.each do | hunt | %>
+    <div class="hunt-display">
+      <div class="hunt-sid-min">
+        <% if hunt.sid.present? %>
+          <%= hunt.sid %>
+        <% else %>
+          <%= form_for :hunt, as: :post, url: sid_update_hunt_path(@post), method: :patch do |f| %>
+            <%= f.button "Add", class: "button-small" %>
+            <%= f.hidden_field :hunt_id, value: hunt.id %>
+            <%= f.text_field :sid, placeholder: "session id" %>
+          <% end %>
+        <% end %>
+      </div>
+      <%= link_to show_hunt_path(hunt: { hunt_id: hunt.id }), remote: true do %>
+        <div class="hunt-info-min trigger-modal">
+          <div class="hunt-date-min"><%= hunt.datetime.strftime("%a. %d/%m") %></div>
+          <div class="hunt-time-min"><%= hunt.datetime.strftime("%Hh%M") %></div>
+          <div class="hunt-title-min"><%= hunt.title %></div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

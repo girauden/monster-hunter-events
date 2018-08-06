@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MonsterHunterEvents</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body>
+      <%= render 'shared/navbar' %>
+    <div class="flash-msg">
+      <%= render 'shared/flash_msg' %>
+    </div>
+    <%= yield %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </body>
+</html>

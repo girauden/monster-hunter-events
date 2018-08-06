@@ -1,0 +1,52 @@
+<div class="modal-background">
+  <div class="modal-content">
+    <div>
+      <span class="modal-close-button">X</span>
+    </div>
+    <div>
+      <p>Platform: <%= @hunt_show.platform.upcase %></p>
+      <p>Title: <%= @hunt_show.title %></p>
+      <p>Hunters enlisted: <%= @hunt_show.hunters.size + 1 %>/<%= @hunt_show.max_hunter %></p>
+      <p>Hunt begin: <%= "#{@hunt_show.datetime.strftime("%A %d %B")} at #{@hunt_show.datetime.strftime("%Hh%M")}" %></p>
+      <p>Hunt end: <%= "#{@hunt_show.end_datetime.strftime("%A %d %B")} at #{@hunt_show.end_datetime.strftime("%Hh%M")}" %></p>
+      <p>Voice chat:
+        <% if @hunt_show.voice_chat.present? %>
+          <%= "#{@hunt_show.voice_chat} Lang: #{@hunt_show.lang} Mic: #{@hunt_show.mic}" %>
+        <% else %>
+          <%= "no voice chat" %>
+        <% end %>
+      </p>
+      <% if @hunt_show.description.present? %>
+          <p>Description:</p>
+          <p class="padding-side"><%= @hunt_show.description %></p>
+        <% else %>
+          <p>Description: no description</p>
+      <% end %>
+    </div>
+    <div>
+      <p>Leader: <%= @hunt_show.leader.username %></p>
+      <p>Hunters:</p>
+      <% @hunt_show.hunters.each do |hunter| %>
+        <p class="hunter-list"><%= hunter.username %>  </p>
+      <% end %>
+    </div>
+    <% unless ((current_user == @hunt_show.leader) || (current_user.already_joined?(@hunt_show))) %>
+      <div>
+        <%= link_to "Join the hunt", join_hunt_path(:hunt =>{ :hunt_id =>
+        @hunt_show.id }), class: "button" %>
+      </div>
+    <% end %>
+    <% if (@hunt_show.hunters.include?(current_user)) %>
+      <div>
+        <%= link_to "Leave Hunt", leave_hunt_path(:hunt =>{ :hunt_id =>
+          @hunt_show.id }), :method => :patch, class: "button-warning" %>
+      </div>
+    <% end %>
+    <% if (current_user == @hunt_show.leader) %>
+      <div>
+        <%= link_to "Delete", delete_hunt_path(:hunt =>{ :hunt_id =>
+          @hunt_show.id }), :method => :delete, class: "button-warning" %>
+      </div>
+    <% end %>
+  </div>
+</div>

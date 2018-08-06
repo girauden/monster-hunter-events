@@ -1,0 +1,29 @@
+<div class="hunts-dashboard-min">
+  <h2>Hunts Joined</h2>
+  <div class="hunts-header">
+    <div class="hunt-sid-min">Sid</div>
+    <div class="hunt-info-min">
+      <div class="hunt-date-min">Date</div>
+      <div class="hunt-time-min">Start at</div>
+      <div class="hunt-title-min">Title</div>
+    </div>
+  </div>
+  <% @hunts_joined_available.each do | hunt | %>
+    <%= link_to show_hunt_path(:hunt => { :hunt_id => hunt.id }), remote: true do %>
+      <div class="hunt-display trigger-modal">
+        <div class="hunt-sid-min">
+          <% if hunt.sid.present? %>
+            <%= hunt.sid %>
+          <% else %>
+            wait the sid
+          <% end %>
+        </div>
+        <div class="hunt-info-min">
+          <div class="hunt-date-min"><%= hunt.datetime.strftime("%a. %d/%m") %></div>
+          <div class="hunt-time-min"><%= hunt.datetime.strftime("%Hh%M") %></div>
+          <div class="hunt-title-min"><%= hunt.title %></div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

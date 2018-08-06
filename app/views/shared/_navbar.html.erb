@@ -1,0 +1,12 @@
+<div class="navbar">
+  <div class="menu">
+    <p><%= current_user.username.capitalize if current_user.present? %></p>
+  </div>
+  <div class="log-in-out">
+    <% if current_user.present? %>
+      <%= link_to('Logout', destroy_user_session_path, method: :delete, class: "button-small") %>
+    <% else %>
+      <%= link_to('Login', new_user_session_path, method: :get, class: "button-small") %>
+    <% end %>
+  </div>
+</div>
