@@ -155,12 +155,10 @@ test:
         read:
           mode: :primary
         max_pool_size: 1
-
-
 production:
   sessions:
     default:
-      uri: <%= ENV["mongodb://heroku_qmpp34lb:j0qpd2n5lol5a3bcc5b4rvj4cv@ds113942.mlab.com:13942/heroku_qmpp34lb"] %>
+      uri: <%= ENV['MONGOLAB_URI'] %>
       options:
         skip_version_check: true
         safe: true
