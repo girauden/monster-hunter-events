@@ -160,7 +160,7 @@ test:
 production:
   sessions:
     default:
-      uri: <%= ENV['MONGOLAB_URI'] %>
+      uri: <%= ENV["mongodb://heroku_qmpp34lb:j0qpd2n5lol5a3bcc5b4rvj4cv@ds113942.mlab.com:13942/heroku_qmpp34lb"] %>
       options:
         skip_version_check: true
         safe: true
