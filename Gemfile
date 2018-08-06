@@ -26,6 +26,11 @@ gem 'bootstrap'
 gem 'momentjs-rails'
 gem 'bootstrap4-datetime-picker-rails'
 
+#Fix vulnerability
+gem 'sprockets', '~> 3.7.2'
+gem 'rails-html-sanitizer', '~> 1.0.4'
+gem 'loofah', '~> 2.2.1'
+
 group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
