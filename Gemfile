@@ -13,6 +13,7 @@ gem 'font-awesome-rails'
 gem 'mongoid'
 #Auth
 gem 'devise'
+gem 'pundit'
 #Assets
 gem 'jquery-rails'
 gem 'turbolinks'
@@ -25,12 +26,11 @@ gem 'font-awesome-rails'
 gem 'bootstrap'
 gem 'momentjs-rails'
 gem 'bootstrap4-datetime-picker-rails'
-
 #Fix vulnerability
 gem 'sprockets', '~> 3.7.2'
 gem 'rails-html-sanitizer', '~> 1.0.4'
 gem 'loofah', '~> 2.2.1'
-
+#Keys protection
 gem "figaro"
 
 group :development do
