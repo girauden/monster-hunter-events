@@ -55,6 +55,8 @@ class HuntsController < ApplicationController
   def join
     @user = current_user
     @hunt = Hunt.find(hunt_params[:hunt_id])
+    authorize @hunt
+
     @hunt.hunters.push(@user)
     @user.hunts_joined.push(@hunt)
 
@@ -73,6 +75,8 @@ class HuntsController < ApplicationController
 
   def create
     @hunt = Hunt.new(hunt_params.merge(leader: current_user))
+    authorize @hunt
+
     if @hunt.valid?
       @hunt.save!
       redirect_to hunt_path
@@ -88,6 +92,8 @@ class HuntsController < ApplicationController
   def sid_update
     @hunt = Hunt.find(hunt_params[:hunt_id])
     @hunt.sid = hunt_params[:sid]
+    authorize @hunt
+
     if @hunt.valid?
       @hunt.update!
       redirect_to hunt_path
@@ -99,6 +105,7 @@ class HuntsController < ApplicationController
   def leave
     @user = current_user
     @hunt = Hunt.find(hunt_params[:hunt_id])
+    authorize @hunt
 
     @hunt.hunters.delete(@user)
     @user.hunts_joined.delete(@hunt)
@@ -118,6 +125,8 @@ class HuntsController < ApplicationController
 
   def destroy
     @hunt = Hunt.find(hunt_params[:hunt_id])
+    authorize @hunt
+
     @hunt.destroy
     redirect_to hunt_path
   end
