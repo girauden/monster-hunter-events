@@ -52,6 +52,10 @@ describe Hunt  do
         hunt.datetime = ''
         expect(hunt).to_not be_valid
       end
+
+      it 'test time' do
+        'DD/MM/YYYY, HH:mm'
+      end
     end
 
     describe '.duration' do
@@ -110,12 +114,12 @@ describe Hunt  do
         expect(hunt.max_hunter.class).to eq(Integer)
       end
 
-      it 'number must be between 2 and 20' do
+      it 'number must be between 2 and 16' do
         hunt.max_hunter = 1
         expect(hunt).to_not be_valid
-        hunt.max_hunter = 21
+        hunt.max_hunter = 17
         expect(hunt).to_not be_valid
-        (2..20).each do |i|
+        (2..16).each do |i|
           hunt.max_hunter = i
           expect(hunt).to be_valid
         end

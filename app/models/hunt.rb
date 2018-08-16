@@ -24,7 +24,7 @@ class Hunt
   validates :title, presence: true, length: {within: 6..50}
   validates :datetime, presence: true
   validates_inclusion_of :duration, :in => 1..24
-  validates_inclusion_of :max_hunter, :in => 2..20
+  validates_inclusion_of :max_hunter, :in => 2..16
   validates_inclusion_of :platform, :in => %w(xbox ps4 pc)
   validates :description, length: {within: 15..500}, allow_nil: true, allow_blank: true
   validates :sid, presence: true, length: { is: 12 }, allow_nil: true

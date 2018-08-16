@@ -81,11 +81,11 @@ class HuntsController < ApplicationController
       @hunt.save!
       redirect_to hunt_path
     else
-      @hunts = Hunt.available.not.where(leader: current_user).sort_by_asc_datetime
-      @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
-      @hunts_joined_available = current_user.hunts_joined.available.sort_by_asc_datetime
-      @hunts_as_leader_available = current_user.hunts_as_leader.available.sort_by_asc_datetime
-      render :index
+      @hunt
+      respond_to do |format|
+        format.html
+        format.js
+      end
     end
   end
 
@@ -98,7 +98,11 @@ class HuntsController < ApplicationController
       @hunt.update!
       redirect_to hunt_path
     else
-      redirect_to hunt_path
+      @hunt
+      respond_to do |format|
+        format.html
+        format.js
+      end
     end
   end
 

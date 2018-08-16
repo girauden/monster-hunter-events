@@ -10,9 +10,6 @@
   <div id="show-hide-form-hunt">
     <%= content_tag(:h2, fa_icon("angle-double-down", text: "Click to create your hunt", right: true)) %>
   </div>
-  <div>
-    <p><%= @hunt.errors.full_messages unless @hunt.errors.blank? %></p>
-  </div>
   <%= render "create_hunt" %>
 </div>
 <div class="spacing-side spacing-small">

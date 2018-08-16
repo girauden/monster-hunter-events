@@ -1,0 +1,2 @@
+$('.unique-error-explanation').remove()
+$('#hunt-unique-error').append("<%= j render(partial: 'shared/unique_error_message', locals: { hunt: @hunt }) %>")

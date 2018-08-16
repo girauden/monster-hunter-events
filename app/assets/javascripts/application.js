@@ -10,16 +10,16 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery2
 //= require jquery_ujs
 //= require popper
 
+//= require bootstrap-sprockets
+//= require moment
+//= require tempusdominus-bootstrap-4
+
+//= require datepicker
 //= require modal
 //= require form
 
-//= require bootstrap-sprockets
-//= require moment
-//= require tempusdominus-bootstrap-4.js
-
 //= require turbolinks
-//= require_tree .
