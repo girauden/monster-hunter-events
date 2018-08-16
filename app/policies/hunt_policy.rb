@@ -1,7 +1,7 @@
 class HuntPolicy < ApplicationPolicy
 
   def join?
-    false if (hunt.hunters.include?(user) || user == hunt.leader)
+    hunt.hunters.exclude?(user) && (user != hunt.leader)
   end
 
   def create?
@@ -9,7 +9,7 @@ class HuntPolicy < ApplicationPolicy
   end
 
   def sid_update?
-    user.present? && user == hunt.leader
+    user.present? && (user == hunt.leader)
   end
 
   def leave?
@@ -17,7 +17,7 @@ class HuntPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.present? && user == hunt.leader
+    user.present? && (user == hunt.leader)
   end
 
   private

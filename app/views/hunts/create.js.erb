@@ -1,0 +1,2 @@
+$('.error-explanation').remove()
+$('#hunt-create-errors').append("<%= j render(partial: 'shared/error_messages', locals: { hunt: @hunt }) %>")

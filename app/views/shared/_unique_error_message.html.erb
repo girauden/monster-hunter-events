@@ -1,0 +1,9 @@
+<% if @hunt.errors.any? %>
+  <div class="unique-error-explanation">
+    <ul>
+    <% @hunt.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>

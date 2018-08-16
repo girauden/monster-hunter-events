@@ -9,13 +9,14 @@
       <div class="hunt-title-min">Title</div>
     </div>
   </div>
+  <div id="hunt-unique-error"></div>
   <% @hunts_as_leader_available.each do | hunt | %>
     <div class="hunt-display">
       <div class="hunt-sid-min">
         <% if hunt.sid.present? %>
           <%= hunt.sid %>
         <% else %>
-          <%= form_for :hunt, as: :post, url: sid_update_hunt_path(@post), method: :patch do |f| %>
+          <%= form_for :hunt, as: :post, url: sid_update_hunt_path(@post), method: :patch, remote: true do |f| %>
             <%= f.button "Add", class: "button-small" %>
             <%= f.hidden_field :hunt_id, value: hunt.id %>
             <%= f.text_field :sid, placeholder: "session id" %>

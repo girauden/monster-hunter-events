@@ -34,14 +34,14 @@ platform = ['xbox', 'ps4', 'pc']
 puts '  hunts already begin'
 50.times do
   title = qualifies.sample + ' ' + words.sample + ' ' + monsters.sample
-  Hunt.create!(title: title, datetime: rand(1..15).hour.ago, duration: rand(1..20), max_hunter: rand(2..20), platform: platform.sample, leader: users.sample)
+  Hunt.create!(title: title, datetime: rand(1..15).hour.ago, duration: rand(1..20), max_hunter: rand(2..16), platform: platform.sample, leader: users.sample)
 end
 
 puts '  hunts on coming'
 
 50.times do
   title = qualifies.sample + ' ' + words.sample + ' ' + monsters.sample
-  Hunt.create!(title: title, datetime: rand(1..10).hour.from_now, duration: rand(1..20), max_hunter: rand(2..20), platform: platform.sample, leader: users.sample)
+  Hunt.create!(title: title, datetime: rand(1..10).hour.from_now, duration: rand(1..20), max_hunter: rand(2..16), platform: platform.sample, leader: users.sample)
 end
 
 puts '  hunts created'

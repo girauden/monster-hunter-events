@@ -1,10 +1,11 @@
 <div id="form-container-hunt">
+  <div id="hunt-create-errors"></div>
   <div class="form-padding-side">
     <p>Field with <span>*</span> must be filled</p>
-    <%= form_for :hunt, as: :post, url: hunt_path(@post), method: :create do |f| %>
+    <%= form_for @hunt, as: :hunt, url: hunt_path(@hunt), method: :create, remote: true do |f| %>
       <div id="form-hunt-left">
         <div id="form-hunt-title">
-          <%= f.text_field :title, placeholder: "This is the name of your hunt" %>
+          <%= f.text_field :title, placeholder: "This is the title of your hunt" %>
           <span>*</span>
         </div>
         <div id="bootstrap-datetime">
@@ -37,7 +38,7 @@
         </div>
         <div>
           <%= f.label :max_hunter do %>
-            <%= f.select :max_hunter, ((2..20).map {|i| [i,i] })%>
+            <%= f.select :max_hunter, ((2..16).map {|i| [i,i] })%>
             <p>Maximum hunter (you included)</p>
             <span>*</span>
           <% end %>
