@@ -21,5 +21,7 @@
 //= require datepicker
 //= require modal
 //= require form
+//= require js.cookie
+//= require user_local_time
 
 //= require turbolinks
