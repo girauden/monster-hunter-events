@@ -7,6 +7,7 @@ class Hunt
   field :end_datetime, type: Time
 
   field :max_hunter, type: Integer
+  field :full, type: Boolean, default:false
   field :platform, type: String
   field :description, type: String
 
@@ -55,6 +56,10 @@ class Hunt
 
   def mic= value
     write_attribute(:mic, value) unless self.voice_chat.blank?
+  end
+
+  def hunters= value
+    write_attribute(:hunters, value)
   end
 
 end

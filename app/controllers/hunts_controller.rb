@@ -57,12 +57,9 @@ class HuntsController < ApplicationController
     @hunt = Hunt.find(hunt_params[:hunt_id])
     authorize @hunt
 
-    @hunt.hunters.push(@user)
-    @user.hunts_joined.push(@hunt)
-
-    if (@hunt.valid? && @user.valid?)
+    if (@hunt.hunters.size + 1) < @hunt.max_hunter
+      @hunt.hunters.push(@user)
       @hunt.update!
-      @user.update!
       redirect_to hunt_path
     else
       @hunts = Hunt.available.not.where(leader: current_user).sort_by_asc_datetime

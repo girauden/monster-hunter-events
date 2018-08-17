@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from Pundit::NotAuthorizedError do
-    redirect_to root_url, alert: 'You do not have access to this page'
+    redirect_to hunt_url, alert: 'You do not have access to this page'
   end
 
 protected
