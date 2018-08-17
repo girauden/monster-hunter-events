@@ -16,26 +16,6 @@ class HuntsController < ApplicationController
     end
   end
 
-  def next
-    hunt = Hunt.find(hunt_params[:hunt_id])
-    @hunts = Hunt.where(:datetime.gt => (hunt.datetime), :end_datetime.gt => (Time.current + 45 * 60)).asc(:datetime).limit(20)
-    respond_to do |format|
-      format.html
-      format.js
-    end
-  end
-
-  def previous
-    hunt = Hunt.find(hunt_params[:hunt_id])
-    p hunt.title
-    @hunts = Hunt.where(:datetime.lt => (hunt.datetime), :end_datetime.gt => (Time.current + 45 * 60)).desc(:datetime).limit(20).asc(:datetime)
-    p @hunts.first
-    respond_to do |format|
-      format.html
-      format.js
-    end
-  end
-
   def find
     @hunt = Hunt.new
     @hunts = Hunt.available
