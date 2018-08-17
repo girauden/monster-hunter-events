@@ -1,7 +1,7 @@
 class HuntPolicy < ApplicationPolicy
 
   def join?
-    hunt.hunters.exclude?(user) && (user != hunt.leader)
+    hunt.hunters.exclude?(user) && (user != hunt.leader) && ((hunt.hunters.size + 1) < hunt.max_hunter)
   end
 
   def create?

@@ -30,19 +30,19 @@
         <p class="hunter-list"><%= hunter.username %>  </p>
       <% end %>
     </div>
-    <% unless ((current_user == @hunt_show.leader) || (current_user.already_joined?(@hunt_show))) %>
+    <% if policy(@hunt_show).join? %>
       <div>
         <%= link_to "Join the hunt", join_hunt_path(:hunt =>{ :hunt_id =>
         @hunt_show.id }), class: "button" %>
       </div>
     <% end %>
-    <% if (@hunt_show.hunters.include?(current_user)) %>
+    <% if policy(@hunt_show).leave? %>
       <div>
         <%= link_to "Leave Hunt", leave_hunt_path(:hunt =>{ :hunt_id =>
           @hunt_show.id }), :method => :patch, class: "button-warning" %>
       </div>
     <% end %>
-    <% if (current_user == @hunt_show.leader) %>
+    <% if policy(@hunt_show).destroy? %>
       <div>
         <%= link_to "Delete", delete_hunt_path(:hunt =>{ :hunt_id =>
           @hunt_show.id }), :method => :delete, class: "button-warning" %>
