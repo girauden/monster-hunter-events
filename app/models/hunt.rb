@@ -62,7 +62,6 @@ class Hunt
   end
 
   def update_hunt_full
-    p 'coucou'
     (self.hunters.size + 1) >= self.max_hunter ? self.full = true : self.full = false
   end
 end
