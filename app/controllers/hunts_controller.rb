@@ -2,7 +2,7 @@ class HuntsController < ApplicationController
 
   def index
     @hunt = Hunt.new
-    @hunts = Hunt.available.not.where(leader: current_user).sort_by_asc_datetime
+    @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
     @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
     @hunts_joined_available = current_user.hunts_joined.available.sort_by_asc_datetime
     @hunts_as_leader_available = current_user.hunts_as_leader.available.sort_by_asc_datetime
@@ -62,7 +62,7 @@ class HuntsController < ApplicationController
       @hunt.update!
       redirect_to hunt_path
     else
-      @hunts = Hunt.available.not.where(leader: current_user).sort_by_asc_datetime
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
       @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
       @hunts_joined_available = current_user.hunts_joined.available.sort_by_asc_datetime
       @hunts_as_leader_available = current_user.hunts_as_leader.available.sort_by_asc_datetime
@@ -108,15 +108,12 @@ class HuntsController < ApplicationController
     @hunt = Hunt.find(hunt_params[:hunt_id])
     authorize @hunt
 
-    @hunt.hunters.delete(@user)
-    @user.hunts_joined.delete(@hunt)
-
-    if (@hunt.valid? && @user.valid?)
-      @hunt.update!
+    if @hunt.hunters.include?(@user)
+      @user.hunts_joined.delete(@hunt)
       @user.update!
       redirect_to hunt_path
     else
-      @hunts = Hunt.available.not.where(leader: current_user).sort_by_asc_datetime
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
       @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
       @hunts_joined_available = current_user.hunts_joined.available.sort_by_asc_datetime
       @hunts_as_leader_available = current_user.hunts_as_leader.available.sort_by_asc_datetime

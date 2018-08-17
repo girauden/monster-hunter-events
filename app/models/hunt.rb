@@ -39,7 +39,10 @@ class Hunt
   scope :on_coming, -> { where(:datetime.gt => (Time.current)) }
   scope :finished, -> { where(:end_datetime.lt => (Time.current)) }
   scope :sort_by_asc_datetime, -> { order_by(datetime: :asc) }
-  scope :with_free_slot, -> { where(:hunters.size.lt => :max_hunter) }
+  scope :with_free_slot, -> { where(:full => false) }
+
+  #Callbacks
+  before_update :update_hunt_full, on: [:leave, :join]
 
   def duration= value
     write_attribute(:duration, value)
@@ -58,8 +61,8 @@ class Hunt
     write_attribute(:mic, value) unless self.voice_chat.blank?
   end
 
-  def hunters= value
-    write_attribute(:hunters, value)
+  def update_hunt_full
+    p 'coucou'
+    (self.hunters.size + 1) >= self.max_hunter ? self.full = true : self.full = false
   end
-
 end
