@@ -20,7 +20,7 @@ modalProcess = ->
 
 loadModalProcess = ->
   modal = document.querySelector('.modal-content')
-  modalProcess()unless modal == null
+  modalProcess() unless modal == null
 
 $(document).ajaxComplete loadModalProcess
 

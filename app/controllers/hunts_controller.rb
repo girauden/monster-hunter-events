@@ -2,7 +2,7 @@ class HuntsController < ApplicationController
 
   def index
     @hunt = Hunt.new
-    @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
+    @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.where(platform: 'pc').sort_by_asc_datetime
     @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
     @hunts_joined_available = current_user.hunts_joined.available.sort_by_asc_datetime
     @hunts_as_leader_available = current_user.hunts_as_leader.available.sort_by_asc_datetime
@@ -17,8 +17,8 @@ class HuntsController < ApplicationController
   end
 
   def find
-    @hunt = Hunt.new
     @hunts = Hunt.available
+
     @hunts = @hunts.where(platform: hunt_params[:platform]) if hunt_params[:platform].present?
     @hunts = @hunts.any_of({title: /.*#{hunt_params[:title]}.*/i}) if hunt_params[:title].present?
     @hunts = @hunts.where(:datetime.gt => (hunt_params[:datetime])) if hunt_params[:datetime].present?
@@ -27,6 +27,8 @@ class HuntsController < ApplicationController
       @hunts = @hunts.where(:lang.in => [hunt_params[:lang]]) if hunt_params[:lang].present?
       @hunts = @hunts.where(mic: true) if hunt_params[:mic] == "1"
     end
+    @hunts = @hunts.not.where(leader: current_user)
+    @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id])
     respond_to do |format|
       format.html
       format.js
@@ -43,7 +45,7 @@ class HuntsController < ApplicationController
       @hunt.update!
       redirect_to hunt_path
     else
-      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.where(platform: 'pc').sort_by_asc_datetime
       @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
       @hunts_joined_available = current_user.hunts_joined.available.sort_by_asc_datetime
       @hunts_as_leader_available = current_user.hunts_as_leader.available.sort_by_asc_datetime
@@ -94,7 +96,7 @@ class HuntsController < ApplicationController
       @user.update!
       redirect_to hunt_path
     else
-      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.where(platform: 'pc').sort_by_asc_datetime
       @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
       @hunts_joined_available = current_user.hunts_joined.available.sort_by_asc_datetime
       @hunts_as_leader_available = current_user.hunts_as_leader.available.sort_by_asc_datetime
@@ -111,18 +113,20 @@ class HuntsController < ApplicationController
   end
 
   def preset_query
-    case hunt_params[:query]
+
+    option = buttons_params.values.first.nil? ? 'noinput' : buttons_params.values.first.downcase
+    case option
     when 'reset' then
-      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.where(platform: hunt_params[:platform]).sort_by_asc_datetime
       @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
     when 'in_progress' then
-      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.in_progress.sort_by_asc_datetime
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.in_progress.where(platform: hunt_params[:platform]).sort_by_asc_datetime
       @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
     when 'oncoming' then
-      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.oncoming.sort_by_asc_datetime
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.oncoming.where(platform: hunt_params[:platform]).sort_by_asc_datetime
       @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
     else
-      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.where(platform: 'pc').sort_by_asc_datetime
       @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
     end
 
@@ -135,6 +139,10 @@ class HuntsController < ApplicationController
   private
 
   def hunt_params
-    params.require(:hunt).permit(:title, :datetime, :duration, :max_hunter, :description, :platform, :voice_chat, :lang, :mic, :hunt_id, :sid, :query)
+    params.require(:hunt).permit(:title, :datetime, :duration, :max_hunter, :description, :platform, :voice_chat, :lang, :mic, :hunt_id, :sid)
+  end
+
+  def buttons_params
+    params.permit(:oncoming, :in_progress, :reset)
   end
 end

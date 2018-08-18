@@ -1,9 +1,12 @@
 <% if @hunts.present? %>
   <div class="hunts-dashboard">
     <div class="hunts-buttons">
-      <%= link_to "Reset", preset_query_hunt_path(hunt: {query: 'reset'}), class: "button-small", remote: true %>
-      <%= link_to "In progress", preset_query_hunt_path(hunt: {query: 'in_progress'}), class: "button-small", remote: true %>
-      <%= link_to "Oncoming", preset_query_hunt_path(hunt: {query: 'oncoming'}), class: "button-small", remote: true %>
+      <%= form_for :hunt, as: :get, url: preset_query_hunt_path(@get), method: :get, remote: true do |f| %>
+        <%= f.select :platform, ['pc','xbox', 'ps4'] %>
+        <%= submit_tag 'Reset', name: 'reset', class: "button-small" %>
+        <%= submit_tag 'In progress', name: 'in_progress', class: "button-small" %>
+        <%= submit_tag 'Oncoming', name: 'oncoming', class: "button-small" %>
+      <% end %>
     </div>
     <div class="hunts-header">
       <div class="hunt-title">Title</div>
@@ -30,5 +33,5 @@
   </div>
 <% else %>
   <h3>There are no avaible hunt</h3>
-  <div><%= link_to "Reload", preset_query_hunt_path(hunt: {query: 'reset'}), class: "button-small", remote: true %></div>
+  <div><%= link_to "Reload", preset_query_hunt_path(), class: "button-small", remote: true %></div>
 <% end %>
