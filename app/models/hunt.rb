@@ -36,7 +36,7 @@ class Hunt
   #Scopes
   scope :available, -> { where(:end_datetime.gt => (Time.current + 45 * 60)) }
   scope :in_progress, -> { where(:end_datetime.gt => (Time.current + 45 * 60), :datetime.lt => (Time.current) ) }
-  scope :on_coming, -> { where(:datetime.gt => (Time.current)) }
+  scope :oncoming, -> { where(:datetime.gt => (Time.current)) }
   scope :finished, -> { where(:end_datetime.lt => (Time.current)) }
   scope :sort_by_asc_datetime, -> { order_by(datetime: :asc) }
   scope :with_free_slot, -> { where(:full => false) }

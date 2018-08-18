@@ -1,6 +1,6 @@
 <div id="form-container-hunt-finder">
   <div class="form-padding-side">
-    <%= form_for :hunt, as: :get, url: find_hunts_path(@get), method: :get do |f| %>
+    <%= form_for :hunt, as: :get, url: find_hunts_path(@get), method: :get, remote: true do |f| %>
       <div>
         <%= f.label :platform do %>
           <%= f.select :platform, ['pc','xbox', 'ps4'] %>
