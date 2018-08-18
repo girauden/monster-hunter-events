@@ -1,0 +1,3 @@
+$('#form-container-hunt-finder').hide()
+$('.hunts-dashboard').remove()
+$('#hunts-dashboard-container').html("<%= j render(partial: 'hunts/hunts', locals: { hunt: @hunts }) %>")

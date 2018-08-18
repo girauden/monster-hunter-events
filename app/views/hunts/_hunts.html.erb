@@ -1,25 +1,34 @@
-<div class="hunts-dashboard">
-  <div class="hunts-buttons"><%= link_to "Reset", hunt_path, class: "button-small" %></div>
-  <div class="hunts-header">
-    <div class="hunt-title">Title</div>
-    <div class="hunt-date">Date</div>
-    <div class="hunt-time">Start at</div>
-    <div class="hunt-duration">Duration</div>
-    <div class="hunt-slot">Hunters enlisted</div>
-    <div class="hunt-leader">Leader</div>
-    <div class="hunt-platform">Platform</div>
-  </div>
-  <% @hunts.each do | hunt | %>
-    <%= link_to show_hunt_path(:hunt => { :hunt_id => hunt.id }), remote: true do %>
-      <div class="hunt-display trigger-modal">
-        <div class="hunt-title"><%= hunt.title %></div>
-        <div class="hunt-date"><%= hunt.datetime.strftime("%a. %d/%m") %></div>
-        <div class="hunt-time"><%= hunt.datetime.strftime("%Hh%M") %></div>
-        <div class="hunt-duration"><%= hunt.duration %>h</div>
-        <div class="hunt-slot"><%= hunt.hunters.size + 1 %>/<%= hunt.max_hunter %></div>
-        <div class="hunt-leader"><%= hunt.leader.username %></div>
-        <div class="hunt-platform"><%= hunt.platform %></div>
-      </div>
+<% if @hunts.present? %>
+  <div class="hunts-dashboard">
+    <div class="hunts-buttons">
+      <%= link_to "Reset", preset_query_hunt_path(hunt: {query: 'reset'}), class: "button-small", remote: true %>
+      <%= link_to "In progress", preset_query_hunt_path(hunt: {query: 'in_progress'}), class: "button-small", remote: true %>
+      <%= link_to "Oncoming", preset_query_hunt_path(hunt: {query: 'oncoming'}), class: "button-small", remote: true %>
+    </div>
+    <div class="hunts-header">
+      <div class="hunt-title">Title</div>
+      <div class="hunt-date">Date</div>
+      <div class="hunt-time">Start at</div>
+      <div class="hunt-duration">Duration</div>
+      <div class="hunt-slot">Hunters enlisted</div>
+      <div class="hunt-leader">Leader</div>
+      <div class="hunt-platform">Platform</div>
+    </div>
+    <% @hunts.each do | hunt | %>
+      <%= link_to show_hunt_path(hunt: { hunt_id: hunt.id }), remote: true do %>
+        <div class="hunt-display trigger-modal">
+          <div class="hunt-title"><%= hunt.title %></div>
+          <div class="hunt-date"><%= hunt.datetime.strftime("%a. %d/%m") %></div>
+          <div class="hunt-time"><%= hunt.datetime.strftime("%Hh%M") %></div>
+          <div class="hunt-duration"><%= hunt.duration %>h</div>
+          <div class="hunt-slot"><%= hunt.hunters.size + 1 %>/<%= hunt.max_hunter %></div>
+          <div class="hunt-leader"><%= hunt.leader.username %></div>
+          <div class="hunt-platform"><%= hunt.platform %></div>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% else %>
+  <h3>There are no avaible hunt</h3>
+  <div><%= link_to "Reload", preset_query_hunt_path(hunt: {query: 'reset'}), class: "button-small", remote: true %></div>
+<% end %>

@@ -27,9 +27,10 @@ class HuntsController < ApplicationController
       @hunts = @hunts.where(:lang.in => [hunt_params[:lang]]) if hunt_params[:lang].present?
       @hunts = @hunts.where(mic: true) if hunt_params[:mic] == "1"
     end
-    @hunts_joined_available = current_user.hunts_joined.available.sort_by_asc_datetime
-    @hunts_as_leader_available = current_user.hunts_as_leader.available.sort_by_asc_datetime
-    render :index
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def join
@@ -109,9 +110,31 @@ class HuntsController < ApplicationController
     redirect_to hunt_path
   end
 
+  def preset_query
+    case hunt_params[:query]
+    when 'reset' then
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
+      @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
+    when 'in_progress' then
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.in_progress.sort_by_asc_datetime
+      @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
+    when 'oncoming' then
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.oncoming.sort_by_asc_datetime
+      @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
+    else
+      @hunts = Hunt.available.not.where(leader: current_user).with_free_slot.sort_by_asc_datetime
+      @hunts = @hunts.not.where(:hunter_ids.in => [current_user.id]).limit(20)
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   private
 
   def hunt_params
-    params.require(:hunt).permit(:title, :datetime, :duration, :max_hunter, :description, :platform, :voice_chat, :lang, :mic, :hunt_id, :sid)
+    params.require(:hunt).permit(:title, :datetime, :duration, :max_hunter, :description, :platform, :voice_chat, :lang, :mic, :hunt_id, :sid, :query)
   end
 end

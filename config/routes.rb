@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'next_hunt', to: 'hunts#next'
   get 'previous_hunt', to: 'hunts#previous'
   get 'find_hunts', to: 'hunts#find'
+  get 'preset_query_hunt',  to: 'hunts#preset_query'
 
   post 'hunt', to: 'hunts#create'
   patch 'sid_update_hunt', to: 'hunts#sid_update'

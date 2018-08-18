@@ -1,6 +1,4 @@
-
-loadModalProcess = ->
-
+modalProcess = ->
   resetModal = ->
     deleteModal()
     deleteListener closeButton, windowOnClick
@@ -16,9 +14,13 @@ loadModalProcess = ->
     return
 
   closeButton = document.querySelector('.modal-close-button')
-  closeButton.addEventListener 'click', resetModal
+  closeButton.addEventListener 'click', resetModal unless (closeButton == null)
   window.addEventListener 'click', windowOnClick
   return
+
+loadModalProcess = ->
+  modal = document.querySelector('.modal-content')
+  modalProcess()unless modal == null
 
 $(document).ajaxComplete loadModalProcess
 
@@ -29,7 +31,7 @@ deleteModal = ->
 
 deleteListener = (closeButton, windowOnClick) ->
   console.log('listener')
-  closeButton.removeEventListener 'click', deleteModal
+  closeButton.removeEventListener 'click', deleteModal unless (closeButton == null)
   window.removeEventListener 'click', windowOnClick
   return
 

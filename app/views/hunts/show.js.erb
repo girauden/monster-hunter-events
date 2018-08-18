@@ -1,5 +1,5 @@
 $('.modal-background').remove()
-$('#modal').append("<%= j render(partial: 'hunts/show', locals: { hunt_show: @hunt_show }) %>")
+$('#modal').html("<%= j render(partial: 'hunts/show', locals: { hunt_show: @hunt_show }) %>")
 
 
 
