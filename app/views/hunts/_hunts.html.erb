@@ -33,5 +33,5 @@
   </div>
 <% else %>
   <h3>There are no avaible hunt</h3>
-  <div><%= link_to "Reload", preset_query_hunt_path(), class: "button-small", remote: true %></div>
+  <div><%= link_to "Reload", preset_query_hunt_path(hunt: {platform: ''}), class: "button-small", remote: true %></div>
 <% end %>
